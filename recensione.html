@@ -1,0 +1,61 @@
+
+<html>
+    <head>
+        <style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+    </head>
+    <body>
+        <table id="customers">
+  <tr>
+    <th>Servizi</th>
+  </tr>
+  <tr>
+    <td>Servizio 1</td>
+  </tr>
+    <tr>
+    <td>Servizio 2</td>
+  </tr>
+    <tr>
+    <td>Servizio 3</td>
+  </tr>
+    <tr>
+    <td>Servizio 4</td>
+  </tr>
+</table>
+
+        <br><br>
+		<form action="http://127.0.0.1:8081" method="post">
+		  <h1><strong>SCRIVI UNA RECENSIONE</strong></h1><br>
+		  <label for="name">NOME UTENTE:</label><br>
+		  <input type="text" id="name" name="name"><br>
+		  <label for="passw">PASSWORD:</label><br>
+          <input type="text" id="passw" name="passw"><br>
+		  <input type="hidden" name="isButtonPressed" value="true">
+          <input type="submit">
+		</form>
+
+</body>
+</html>
+ <br><br><h1>Recensione</h1>  
