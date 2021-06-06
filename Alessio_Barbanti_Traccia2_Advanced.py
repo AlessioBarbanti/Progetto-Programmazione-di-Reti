@@ -10,7 +10,7 @@ allowedIPAddress = []
 html ="""
     <html>
         <body>
-        		<form action="http://192.168.178.38:8080/?Registrati" method="post">
+        		<form action="http://{ownLocalIPAdress}:{port}/?Registrati" method="post">
         		  <h1><strong>REGISTRATI </strong></h1><br>
         		  <label for="name">NOME UTENTE:</label><br>
         		  <input type="text" id="name" name="name"><br>
@@ -22,7 +22,7 @@ html ="""
                 
                 <br>       
                 <br>
-        		<form action="http://192.168.178.38:8080/?Login" method="post"> <h1><strong> LOGIN </strong></h1><br>
+        		<form action="http://{ownLocalIPAdress}:{port}/?Login" method="post"> <h1><strong> LOGIN </strong></h1><br>
         		  <label for="name">NOME UTENTE:</label><br>
         		  <input type="text" id="name" name="name"><br>
         		  <label for="passw">PASSWORD:</label><br>
@@ -32,11 +32,10 @@ html ="""
         
         		</form>
            <br>     
-           <a href="http://192.168.178.38:8080/traccia.pdf" download="traccia2 esame 2021.pdf" >Scarica Traccia</a>
+           <a href="{ownLocalIPAdress}:{port}/traccia.pdf" download="traccia2 esame 2021.pdf" >Scarica Traccia</a>
         </body>
     </html>
-    """
-
+    """.format(port=port, ownLocalIPAdress = ownLocalIPAdress)
 
 
 
@@ -48,7 +47,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
     
             
     def do_POST(self):
-            print("CLIENT ADDRESS: ", self.client_address[0])
+            # print("CLIENT ADDRESS: ", self.client_address[0])
             form = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD':'POST'})
             name = form.getvalue('name')
             passw = form.getvalue('passw')
@@ -59,11 +58,11 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                     with open("Account.txt", "a") as account_list:
                         data = name + "-" + passw +"\n"
                         account_list.write(data)       
-                    print("Registrazione effettuata con successo")
+                    print("Successfull Registration")
                     self.path = "/"
 
                 else:
-                    print("Account già esistente")
+                    print("Account already existing")
                     self.path = "/"
 
                 
@@ -84,16 +83,12 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
             self.do_GET()
             
     def do_GET(self):
-        print("GET EFFETTUATA")
         if self.client_address[0] in allowedIPAddress:
-            print("ciao!")
             if self.path.find("servizio") == -1:
                 self.send_response(302)
                 self.send_header('Location','/servizio.html')
         else:
-            print("ciao2!")
             if self.path.find("servizio") != -1:
-                print("ciao3!")
                 self.send_response(302)
                 self.send_header('Location','/index.html')
 
@@ -130,7 +125,7 @@ server = socketserver.ThreadingTCPServer((ownLocalIPAdress,port), MyHandler)
 
 
 def signal_handler(signal, frame):
-    print("interruzione")
+    print("Spegnimento del Server")
     try:
       if(server):
         server.server_close()
