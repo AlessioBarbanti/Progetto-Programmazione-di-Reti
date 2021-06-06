@@ -76,10 +76,9 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                         print(allowedIPAddress)
                         self.send_response(302)
                         self.send_header('Location','/servizio.html')
-                        self.end_headers()
                     
                 else:
-                    print("Failed Login ")
+                    print("Failed Login ") 
                     self.path = "/"
 
             self.do_GET()
@@ -88,24 +87,18 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
         print("GET EFFETTUATA")
         if self.client_address[0] in allowedIPAddress:
             print("ciao!")
-            lower_path = self.path.lower()
-            if lower_path.find("servizio") == -1:
+            if self.path.find("servizio") == -1:
                 self.send_response(302)
                 self.send_header('Location','/servizio.html')
-                self.end_headers()
         else:
             print("ciao2!")
-            lower_path = self.path.lower()
-            print("lower_path: ", lower_path)
-            if lower_path.find("servizio") != -1:
+            if self.path.find("servizio") != -1:
+                print("ciao3!")
                 self.send_response(302)
-                self.send_header('Location','/')
-                self.end_headers()
-        print("AAAAAA")
+                self.send_header('Location','/index.html')
+
         
-        self.send_response(200)
-        
-        # http.server.SimpleHTTPRequestHandler.do_GET(self)
+        http.server.SimpleHTTPRequestHandler.do_GET(self)
 
       
 def check_credentials(name, passw):
