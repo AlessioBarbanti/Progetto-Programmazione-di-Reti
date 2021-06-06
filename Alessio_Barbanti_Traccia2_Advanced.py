@@ -59,11 +59,9 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                         data = name + "-" + passw +"\n"
                         account_list.write(data)       
                     print("Successfull Registration")
-                    self.path = "/"
 
                 else:
                     print("Account already existing")
-                    self.path = "/"
 
                 
             if self.path.find("Login") != -1:
@@ -77,8 +75,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                         self.send_header('Location','/servizio.html')
                     
                 else:
-                    print("Failed Login ") 
-                    self.path = "/"
+                    print("Failed Login ")
 
             self.do_GET()
             
@@ -115,7 +112,7 @@ def check_existing_name(name):
              else:
                  return -1      
             
-def print_page():
+def print_pages():
             f = open('index.html','w', encoding="utf-8")
             f.write(html)
             f.close()
@@ -138,7 +135,7 @@ def main():
 
     
     # DEBUG cancella i dati account ogni volta che il server viene attivato
-    print_page()
+    print_pages()
     f = open('Account.txt','w', encoding="utf-8")
     f.close()
     
